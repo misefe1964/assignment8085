@@ -46,19 +46,20 @@ JMP LOOP
 
 DELAY_UMS: OUT 10H
 ; FAZER ROTINA DE DELAY AQUI
-JMP 0045H                  ; salta para loop linha MOV A, B
+JMP LC                     ; salta para continuação do loop
 
 LOOP: MOV A, M             ; passa para o acumulador o numero para o display
 OUT 00H                    ; mostra o numero de segundos faltantes
 JMP DELAY_UMS
-MOV A, B                   ; acumulador recebe numero de segundos faltantes
+LC: MOV A, B               ; acumulador recebe numero de segundos faltantes
 DCR A                      ; decrementa o numero de segundos faltantes
 DCR L                      ; decrementa endereco de memoria para ir para o proximo numero
 JNZ LOOP
 JMP FIM
 
 
-FIM: OUT 00H
+FIM: MOV A, M
+OUT 00H
 ; FAZER ROTINA DE FINALIZACAO AQUI
 
 HLT
