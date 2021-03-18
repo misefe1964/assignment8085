@@ -45,7 +45,7 @@ JMP LOOP
 
 DELAY_UMS: OUT 10H
 ; FAZER ROTINA DE DELAY AQUI
-    RET                        ; salta para continuação do loop
+    RET                        ; salta para continuacao do loop
 
 LOOP: MOV A, M                 ; passa para o acumulador o numero para o display
     OUT 00H                    ; mostra o numero de segundos faltantes
