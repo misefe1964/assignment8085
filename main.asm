@@ -1,3 +1,9 @@
+; Trabalho de Assembly: 8085
+; Organizacao e Arquitetura de Computadores
+; Nomes: Jhennifer Matias e Milena Fernandes
+; Professor: Roderval Marcelino
+; Descrição: Timer de no maximo 9s 
+ 
     .org 0010h
 
     LXI H, 1000H
@@ -62,6 +68,7 @@ FIM: MOV A, M
 ; FAZER ROTINA DE FINALIZACAO AQUI
 
 HLT
-; PARA EXECUTAR: DISPLAY 7-SEG EH PORTA 00H
+; PARA EXECUTAR: 
+; DISPLAY 7-SEG EH PORTA 00H
 ; FILEIRA DO PAINEL DE LEDS: PORTA 10H (PODE SER USADO NA ROTINA DE FINALIZACAO)
 ; TECLADO: ENTRADA 03H
