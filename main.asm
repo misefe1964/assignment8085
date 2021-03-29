@@ -2,7 +2,7 @@
 ; Organizacao e Arquitetura de Computadores
 ; Nomes: Jhennifer Matias e Milena Fernandes
 ; Professor: Roderval Marcelino
-; Descrição: 4 Timers de no maximo 9s com interrupcao
+; Descricao: 4 Timers de no maximo 9s com interrupcao
 ; para campeonatos de cubo magico 2x2
 
 .define
@@ -59,6 +59,8 @@ R1:
     MVI H, E0H
     MVI L, 0EH
     MOV M, A                ; coloca tempo decorrido na tela de texto
+    MVI A, FFH
+    OUT 08H
 R2:
     IN INTERRUP             ; nao inicia contagem enquanto interrupcao esta ativada
     XRI 00H
@@ -74,6 +76,8 @@ R2:
     MVI H, E0H
     MVI L, 35H
     MOV M, A                ; coloca tempo decorrido na tela de texto
+    MVI A, FFH
+    OUT 09H
 R3:
     IN INTERRUP             ; nao inicia contagem enquanto interrupcao esta ativada
     XRI 00H
@@ -89,6 +93,8 @@ R3:
     MVI H, E0H
     MVI L, 5EH
     MOV M, A                ; coloca tempo decorrido na tela de texto
+    MVI A, FFH
+    OUT 0AH
 R4:
     IN INTERRUP             ; nao inicia contagem enquanto interrupcao esta ativada
     XRI 00H
@@ -104,9 +110,11 @@ R4:
     MVI H, E0H
     MVI L, 84H
     MOV M, A                ; coloca tempo decorrido na tela de texto
+    MVI A, FFH
+    OUT 0BH
     JMP FIM                 ; fim do programa
 ; porta de entrada associada ao teclado eh 03H
-; lê numero total de segundos:
+; le numero total de segundos:
 
 COMECA_CONTAGEM:
 
@@ -117,12 +125,19 @@ COMECA_CONTAGEM:
 
 
 DELAY_UMS: 
-; FAZER ROTINA DE DELAY AQUI
-    RET                        ; salta para continuacao do loop
+	LXI B, 1000H
+	DELAY: 
+		DCX B
+        MOV A, B
+        ORA C
+   		JNZ DELAY
+        
+    RET
 
 LOOP: 
     MOV A, M                   ; passa para o acumulador o numero para o display
     OUT 00H                    ; mostra o numero de segundos faltantes
+    CALL DELAY_UMS
     CALL DELAY_UMS
     IN INTERRUP                ; verifica se interrupcao foi ativada
     XRI 00H
@@ -167,11 +182,9 @@ IMP:
     MOV A, B            ; passa dezenas para acumulador
     ADI 30H             ; transforma em ascii
     MOV M, A            ; mostra na tela de texto
-    
-; FAZER ROTINA DE FINALIZACAO AQUI
 
 HLT
 ; PARA EXECUTAR: 
 ; DISPLAY 7-SEG EH PORTA 00H E 007 PARA MOSTRAR NUMERO DO TIMER
-; FILEIRA DO PAINEL DE LEDS: QUALQUER PORTA QUE NÃO SEJA DE 00H A 07H
+; FILEIRA DO PAINEL DE LEDS: 08H A 0BH
 ; INTERRUPTORES: ENTRADAS 00H A 05H (START + 4 TIMERS + INTERRUPCAO)
