@@ -113,8 +113,6 @@ R4:
     MVI A, FFH
     OUT 0BH
     JMP FIM                 ; fim do programa
-; porta de entrada associada ao teclado eh 03H
-; le numero total de segundos:
 
 COMECA_CONTAGEM:
 
@@ -131,7 +129,6 @@ DELAY_UMS:
         MOV A, B
         ORA C
    		JNZ DELAY
-        
     RET
 
 LOOP: 
